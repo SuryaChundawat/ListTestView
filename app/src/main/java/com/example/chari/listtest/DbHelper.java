@@ -4,7 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Chari on 9/20/2016.
@@ -21,6 +24,7 @@ public class DbHelper extends SQLiteOpenHelper
     public static final String LISTOFMOVIE2="moview_name2";
     public static final String LISTOFMOVIE3="moview_name3";
     public static final String LISTOFMOVIE4="moview_name4";
+    public static final String LISTOFIMAGE="image_movie";
 
     private static final String TAG = "DbHelper";
 
@@ -39,7 +43,8 @@ public class DbHelper extends SQLiteOpenHelper
             LISTOFMOVIE1+" TEXT NOT NULL , "+
             LISTOFMOVIE2+" TEXT NOT NULL , "+
             LISTOFMOVIE3+" TEXT NOT NULL , "+
-            LISTOFMOVIE4+" TEXT NOT NULL);";
+            LISTOFMOVIE4+" TEXT NOT NULL , "+
+            LISTOFIMAGE+" TEXT NOT NULL);";
 
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -51,7 +56,7 @@ public class DbHelper extends SQLiteOpenHelper
 
 
 
-    public boolean getData(String MovieName, String Movie2,String Movie3 ,String Movie4, String Movie5)
+    public long getData(String MovieName, String Movie2, String Movie3 , String Movie4, String Movie5, Bitmap imagecap)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -60,22 +65,23 @@ public class DbHelper extends SQLiteOpenHelper
         cv.put(LISTOFMOVIE2, Movie3);
         cv.put(LISTOFMOVIE3, Movie4);
         cv.put(LISTOFMOVIE4, Movie5);
+        cv.put(LISTOFIMAGE, getBitmapAsByteArray(imagecap));
 
 
         long redult=db.insert(TABLE_NAME,null,cv);
 
-        if (redult==-1)
-        {
-
-            return false;
-        }else
-        {
-
-            return true;
-        }
+       return redult;
 
 
 
+    }
+
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+        return outputStream.toByteArray();
     }
 
 

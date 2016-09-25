@@ -53,7 +53,7 @@ public class Activity1 extends AppCompatActivity
                 {
                     Toast.makeText(getApplicationContext(),"Data is Updated",Toast.LENGTH_SHORT).show();
 
-                    startActivity(new Intent(Activity1.this,MainActivity.class));
+                    startActivity(new Intent(Activity1.this,ViewListView.class));
                     finish();
 
                 }else

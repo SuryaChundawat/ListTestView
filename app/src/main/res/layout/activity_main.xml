@@ -47,6 +47,24 @@
         />
 
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/imageClick"
+        android:text="Click Picture"
+        android:contextClickable="true"
+
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="15dp"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_weight="1"
+        android:id="@+id/imageView"
+        />
+
+
 
     <Button
         android:layout_width="match_parent"
