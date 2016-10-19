@@ -23,9 +23,9 @@ public class ViewListView extends AppCompatActivity
     SQLiteDatabase sqLiteDatabase;
     Cursor cursor;
 
-    public static  ArrayList<String> Id = new ArrayList<String>();
-    public static  ArrayList<String> Movie = new ArrayList<String>();
-    public static  ArrayList<String> Movie2= new ArrayList<String>();
+    public static ArrayList<String> Id = new ArrayList<String>();
+    public static ArrayList<String> Movie = new ArrayList<String>();
+    public static ArrayList<String> Movie2= new ArrayList<String>();
     public static ArrayList<String> Movie3 = new ArrayList<String>();
     public static ArrayList<String> Movie4= new ArrayList<String>();
     public static ArrayList<String> Movie5= new ArrayList<String>();
@@ -38,26 +38,9 @@ public class ViewListView extends AppCompatActivity
 
         dbHelper= new DbHelper(this);
 
-
-
         listView=(ListView)findViewById(R.id.listview);
 
-        //dbHelper.getDataFromData();
-        //getDataFromData();
-
-
-
-
-
-
-        /*listAdapter = new ArrayAdapter<String>(this, R.layout.row, data);
-        listView.setAdapter(listAdapter);*/
-
-
     }
-
-
-
 
 
     public void getDataFromData()
@@ -85,8 +68,6 @@ public class ViewListView extends AppCompatActivity
         CoustomAdapter customAdapter= new CoustomAdapter(getApplicationContext(),Id,Movie,Movie2,Movie3,Movie4,Movie5);
         listView.setAdapter(customAdapter);
 
-
-
         cursor.close();
 
         Log.e("getAllData SQL: ",""+ Id);
@@ -95,10 +76,6 @@ public class ViewListView extends AppCompatActivity
         Log.e("getAllData SQL3: ",""+ Movie3);
         Log.e("getAllData SQL4: ",""+ Movie4);
         Log.e("getAllData SQL5: ",""+ Movie5);
-
-
-
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -115,10 +92,6 @@ public class ViewListView extends AppCompatActivity
 
             }
         });
-
-
-
-
 
     }
 

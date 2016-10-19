@@ -35,7 +35,6 @@ public class CoustomAdapter extends BaseAdapter
         this.Movie5=Movie5;
         inflater=(LayoutInflater.from(applicationContext));
 
-
     }
 
     @Override

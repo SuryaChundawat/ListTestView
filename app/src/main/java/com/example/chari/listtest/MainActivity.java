@@ -1,16 +1,20 @@
 package com.example.chari.listtest;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     DbHelper dbHelper;
     Button image;
     ImageView imageView;
+    TextView tex1;
     ListView  listMovie;
     EditText editText,EditMovie2,EditMovie3,EditMovie4,EditMovie5,EditMovie6;
     Button InsertData;
@@ -32,6 +37,9 @@ public class MainActivity extends AppCompatActivity
     Bitmap thumbnail;
     private int take=1;
     int REQUEST_CAMERA = 0;
+    private ProgressDialog pDialog;
+    private  WebRequest webre;
+    public static String  URL="http://www.practica.eichgi.com/books.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,8 +53,11 @@ public class MainActivity extends AppCompatActivity
         EditMovie4=(EditText)findViewById(R.id.EditMoview3);
         EditMovie5=(EditText)findViewById(R.id.EditMoview4);
         InsertData=(Button)findViewById(R.id.InsertData);
+        tex1=(TextView)findViewById(R.id.tex1);
         image=(Button)findViewById(R.id.imageClick);
         imageView=(ImageView)findViewById(R.id.imageView);
+        webre= new WebRequest();
+
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +89,10 @@ public class MainActivity extends AppCompatActivity
     public void Insert(View view)
     {
 
+        new HttpAsyncTaskFromDetails().execute(URL);
+
+
+
         String movie=editText.getText().toString();
 
 
@@ -101,14 +116,6 @@ public class MainActivity extends AppCompatActivity
         {
 
             onCaptureImageResult(data);
-           /* if (requestCode == RESULT_OK *//*&& data != null*//*)
-            {
-               *//* photocap=(Bitmap)data.getExtras().get("data");
-                Toast.makeText(getApplicationContext(),"Data Inserted"+photocap,Toast.LENGTH_SHORT).show();
-                Log.e("Bitmap is coming",""+photocap);
-                imageView.setImageBitmap(photocap);
-                Toast.makeText(MainActivity.this, "Successfully capture image .", Toast.LENGTH_LONG).show();*//*
-            }*/
         }
     }
 
@@ -130,12 +137,75 @@ public class MainActivity extends AppCompatActivity
             fo.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 
         imageView.setImageBitmap(thumbnail);
 
+        //this is
+
 
     }
+
+
+    private class HttpAsyncTaskFromDetails extends AsyncTask<String, Void, String>
+    {
+        private String result;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls)
+        {
+
+            String res1=webre.makeWebServiceCall(urls[0],1);
+            Log.e("Result",res1);
+             /*  try {
+            JSONObject jsonObject=new JSONObject(response.toString());
+             user_json = jsonObject.getString("user");
+            Log.e(TAG,"user name"+user);
+             password_json=jsonObject.getString("Password");
+            Log.e(TAG,"user password"+password);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(user.getText().toString()==user_json&&password.getText().toString()==password_json)
+        {
+           // Toast.makeText(,"user password sucess",Toast.LENGTH_SHORT).show();
+            Log.e(TAG,"Authantication sucess");
+        }else
+        {
+            Log.e(TAG,"Authantication failed");
+        }*/
+
+            return res1;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(String.valueOf(result));
+            tex1.setText(result);
+
+            pDialog.dismiss();
+
+
+        }
+    }
+
+
+
 }

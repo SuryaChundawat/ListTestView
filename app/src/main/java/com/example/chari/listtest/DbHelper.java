@@ -85,15 +85,7 @@ public class DbHelper extends SQLiteOpenHelper
     }
 
 
-   /* public Integer update2(String id)
-    {
-        SQLiteDatabase sqLiteDatabase =this.getWritableDatabase();
-        return  sqLiteDatabase.delete(TABLE_NAME,"_id",new String[]{id});
 
-
-
-
-    }*/
 
     public boolean update(String id,String movie, String movie2, String movie3, String movie4, String movie5)
     {
@@ -110,8 +102,6 @@ public class DbHelper extends SQLiteOpenHelper
         return true;
 
     }
-
-
 
 
     @Override
